@@ -63,7 +63,5 @@ def main():
     except playerError:
         print('pas plus de un joueur autorisé.')
 
-
-
 if __name__ == "__main__":
     main = main()
