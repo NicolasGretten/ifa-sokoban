@@ -1,6 +1,6 @@
 import curses
 import time
-import re
+import collections
 
 def main(lines, P, O, X, limit):
 
@@ -23,7 +23,7 @@ def main(lines, P, O, X, limit):
         try:
             entry = stdscr.getch()
             stdscr.clear()
-            h, w = stdscr.getmaxyx()
+
             i = 0
 
             for x in lines:
@@ -35,42 +35,62 @@ def main(lines, P, O, X, limit):
                 counter +=1
                 player[0] -=1
                 player[1] = player[1]
-                stdscr.addstr(player[0], player[1], "P")
-                stdscr.addstr(10, 10, f"nombre de coup : {counter}")
+
+                if player in limit:
+                    player[0] +=1
+                    player[1] = player[1]
+                    stdscr.addstr(player[0], player[1], "P")
+                    stdscr.addstr(10, 10, f"Vous foncez dans le mur ! nombre de coup : {counter}")
+                else :
+                    stdscr.addstr(player[0], player[1], "P")
+                    stdscr.addstr(10, 10, f"nombre de coup : {counter}")
 
             if entry == curses.KEY_DOWN:
                 counter +=1
                 player[0] +=1
                 player[1] = player[1]
-                stdscr.addstr(player[0], player[1], "P")
-                stdscr.addstr(10, 10, f"nombre de coup : {counter}")
+                if player in limit:
+                     player[0] -=1
+                     player[1] = player[1]
+                     stdscr.addstr(player[0], player[1], "P")
+                     stdscr.addstr(10, 10, f"Vous foncez dans le mur ! nombre de coup : {counter}")
+                else :
+                     stdscr.addstr(player[0], player[1], "P")
+                     stdscr.addstr(10, 10, f"nombre de coup : {counter}")
 
             if entry == curses.KEY_LEFT:
                 counter +=1
                 player[0] = player[0]
                 player[1] -= 1
-                stdscr.addstr(player[0], player[1], "P")
-                stdscr.addstr(10, 10, f"nombre de coup : {counter}")
+                if player in limit:
+                    player[0] = player[0]
+                    player[1] +=1
+                    stdscr.addstr(player[0], player[1], "P")
+                    stdscr.addstr(10, 10, f"Vous foncez dans le mur ! nombre de coup : {counter}")
+                else :
+                    stdscr.addstr(player[0], player[1], "P")
+                    stdscr.addstr(10, 10, f"nombre de coup : {counter}")
 
             if entry == curses.KEY_RIGHT:
                 counter +=1
                 player[0] = player[0]
                 player[1] += 1
-                stdscr.addstr(player[0], player[1], "P")
-                stdscr.addstr(10, 10, f"nombre de coup : {counter}")
+                if player in limit:
+                    player[0] = player[0]
+                    player[1] -=1
+                    stdscr.addstr(player[0], player[1], "P")
+                    stdscr.addstr(10, 10, f"Vous foncez dans le mur ! nombre de coup : {counter}")
+                else :
+                    stdscr.addstr(player[0], player[1], "P")
+                    stdscr.addstr(10, 10, f"nombre de coup : {counter}")
 
-            #Espace
             if entry == 32:
-                player[0] = P[0]
-                player[1] = P[1]
                 counter = 0
-#                 stdscr.refresh()
+                stdscr.refresh()
 
-            #Echap
             if entry == 27:
                 raise error
 
-            #Q
             if entry == 81:
                 raise error
 

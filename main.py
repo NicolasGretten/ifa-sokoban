@@ -17,7 +17,6 @@ def main():
         tmp_file = tmp.readerStr("./map/01.txt", "r")
         map_file = []
 
-        limit = []
         i = 0
         counterP = 0
         counterX = 0
@@ -30,8 +29,6 @@ def main():
 
         for line in tmp_file:
             coor = [i, len(line) -1]
-            limit.append(coor)
-
 
             if line.find("P") != -1:
                 counterP += 1
