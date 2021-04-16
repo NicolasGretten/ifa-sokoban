@@ -1,7 +1,13 @@
 import curses
 import time
 
-def main(list):
+def main(lines, P, O, X, limit):
+
+    player = P
+
+    boulder = O
+
+    position = X
 
     stdscr = curses.initscr()
     curses.curs_set(0)
@@ -10,30 +16,46 @@ def main(list):
 
     stdscr.keypad(True)
 
+    curses.setsyx(P[0], P[1])
+
     while True:
         try:
             entry = stdscr.getch()
             stdscr.clear()
             h, w = stdscr.getmaxyx()
             i = 0
-            for x in list:
+
+            for x in lines:
                 stdscr.addstr(i, 0, x)
                 i+= 1
                 stdscr.refresh()
 
-#             test = curses.ascii.ctrl('P')
             if entry == curses.KEY_UP:
-                stdscr.addstr(10, 10, 'test')
+                player[0] -=1
+                player[1] = player[1]
+                stdscr.addstr(10, 10, f"{player[0]}, {player[1]} ")
+
             if entry == curses.KEY_DOWN:
-                stdscr.addstr(10, 10, "je suis sur la touche du bas")
+                player[0] +=1
+                player[1] = player[1]
+                stdscr.addstr(10, 10, f"{player[0]}, {player[1]} ")
+
             if entry == curses.KEY_LEFT:
-                stdscr.addstr(10, 10, "je suis sur la touche de gauche")
+                player[0] = player[0]
+                player[1] -= 1
+                stdscr.addstr(10, 10, f"{player[0]}, {player[1]} ")
+
             if entry == curses.KEY_RIGHT:
-                stdscr.addstr(10, 10, "je suis sur la touche de droite")
+                player[0] = player[0]
+                player[1] += 1
+                stdscr.addstr(10, 10, f"{player[0]}, {player[1]} ")
+
             if entry == 32:
                 stdscr.refresh()
+
             if entry == 27:
                 raise error
+
             if entry == 81:
                 raise error
 

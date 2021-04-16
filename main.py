@@ -32,7 +32,5 @@ def main():
 
     map.main(tmp_file,coordP, coordO, coordX, limit)
 
-
-    print(limit, coordP, coordO, coordX)
 if __name__ == "__main__":
     main = main()
