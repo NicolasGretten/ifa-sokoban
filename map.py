@@ -1,5 +1,6 @@
 import curses
 import time
+import re
 
 def main(lines, P, O, X, limit):
 
@@ -14,9 +15,9 @@ def main(lines, P, O, X, limit):
     curses.noecho()
     curses.cbreak()
 
-    stdscr.keypad(True)
+    counter = 0
 
-    curses.setsyx(P[0], P[1])
+    stdscr.keypad(True)
 
     while True:
         try:
@@ -31,31 +32,45 @@ def main(lines, P, O, X, limit):
                 stdscr.refresh()
 
             if entry == curses.KEY_UP:
+                counter +=1
                 player[0] -=1
                 player[1] = player[1]
-                stdscr.addstr(10, 10, f"{player[0]}, {player[1]} ")
+                stdscr.addstr(player[0], player[1], "P")
+                stdscr.addstr(10, 10, f"nombre de coup : {counter}")
 
             if entry == curses.KEY_DOWN:
+                counter +=1
                 player[0] +=1
                 player[1] = player[1]
-                stdscr.addstr(10, 10, f"{player[0]}, {player[1]} ")
+                stdscr.addstr(player[0], player[1], "P")
+                stdscr.addstr(10, 10, f"nombre de coup : {counter}")
 
             if entry == curses.KEY_LEFT:
+                counter +=1
                 player[0] = player[0]
                 player[1] -= 1
-                stdscr.addstr(10, 10, f"{player[0]}, {player[1]} ")
+                stdscr.addstr(player[0], player[1], "P")
+                stdscr.addstr(10, 10, f"nombre de coup : {counter}")
 
             if entry == curses.KEY_RIGHT:
+                counter +=1
                 player[0] = player[0]
                 player[1] += 1
-                stdscr.addstr(10, 10, f"{player[0]}, {player[1]} ")
+                stdscr.addstr(player[0], player[1], "P")
+                stdscr.addstr(10, 10, f"nombre de coup : {counter}")
 
+            #Espace
             if entry == 32:
-                stdscr.refresh()
+                player[0] = P[0]
+                player[1] = P[1]
+                counter = 0
+#                 stdscr.refresh()
 
+            #Echap
             if entry == 27:
                 raise error
 
+            #Q
             if entry == 81:
                 raise error
 
