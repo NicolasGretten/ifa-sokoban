@@ -4,11 +4,9 @@ import reader
 import re
 
 class playerError(Exception):
-
     pass
 
 class boulderError(Exception):
-
     pass
 
 def main():
@@ -38,6 +36,7 @@ def main():
             if line.find("O") != -1:
                 counterO += 1
                 coordO = [i, line.find("O")]
+                line = line.replace('O', ' ')
 
             if line.find("X") != -1:
                 counterX += 1
@@ -57,12 +56,14 @@ def main():
         if counterO != counterX:
             raise boulderError
 
+        map.map(map_file, coordP, coordO, coordX, coordLimit)
+
     except boulderError:
         print('le nombre de box et d\'emplacement ne sont pas les mêmes.')
     except playerError:
         print('pas plus de un joueur autorisé.')
 
-    map.main(map_file, coordP, coordO, coordX, coordLimit)
+
 
 if __name__ == "__main__":
     main = main()
